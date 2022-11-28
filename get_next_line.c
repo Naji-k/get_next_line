@@ -34,11 +34,10 @@ char	*get_next_line(int fd)
 	int			y;
 	int			b_len;
 	int			res_len;
+	char		*temp;
 
 	y = 0;
 	i = 0;
-	// if (fd == -1)
-	// 	return (NULL);
 	if (fd < 3 && fd != 0)
 		return (NULL);
 	if (buffer == NULL)
@@ -63,7 +62,6 @@ char	*get_next_line(int fd)
 		}
 		else if (n == -1)
 		{
-			// printf("error n=%d\n", n);
 			return (NULL);
 		}
 		else
@@ -72,13 +70,13 @@ char	*get_next_line(int fd)
 	b_len = ft_strlen(buffer);
 	if (b_len == 0)
 		return (NULL);
-	// printf("b_len=%d\n", b_len);
 	while (buffer[i] != '\n' && buffer[i] != '\0')
 		i++;
 	res = ft_substr(buffer, y, (i + 1));
 	res_len = ft_strlen(res);
+	temp = buffer;
 	buffer = ft_substr(buffer, res_len, (b_len - res_len));
-	// printf("b_len=%d\tres_len=%d\n", b_len, res_len);
+	free(temp);
 	// res[i] = '\n';
 	// printf("end_BUFFER=%s\n", buffer);
 	return (res);
@@ -121,10 +119,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (s2 != NULL)
 		s2_len = ft_strlen(s2);
 	str_join = malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if (!str_join)
+	if (str_join == NULL)
 	{
-		free(s2);
-		free(str_join);
+		free(s1);
 		return (NULL);
 	}
 	ft_strlcpy(str_join, s1, s1_len + 1);
@@ -201,10 +198,17 @@ char	*ft_strdup(char *s1)
 	memcpy(str, s1, len);
 	return (str);
 }
+/* 
 
-/* int	main(void)
+void	check_leaks(void)
 {
-	int	fd;
+	system("leaks -q a.out");
+}
+
+int	main(void)
+
+{
+	int fd;
 
 	char *files[] = {
 		"files/41_no_nl",                  //0
@@ -224,29 +228,19 @@ char	*ft_strdup(char *s1)
 		"files/nl",                        //14
 		"file.txt",                        //15
 	};
-	fd = open(files[14], O_RDONLY);
-	// fd = open("a.out", O_RDONLY);
-	// printf("strlen for abc=%d\n",ft_strlen(NULL));
-	printf("fd=%d\n", fd);
-	printf("GNL=%s", get_next_line(fd));
-	printf("***2ndcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	printf("***3rdcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	printf("***4thcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	printf("***5thcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	printf("***6thcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	printf("***7thcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	printf("***8thcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	printf("***9thcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	printf("***10thcal***\n");
-	printf("GNL=%s", get_next_line(fd));
-	return (0);
+	fd = open(files[15], O_RDONLY);
+	atexit(check_leaks);
+
+	char *test = NULL;
+	while (1)
+	{
+		test = get_next_line(fd);
+		if (!test)
+			break ;
+		printf("GNL=%s", test);
+		free(test);
+	}
+
 }
- */
+	*/
+
