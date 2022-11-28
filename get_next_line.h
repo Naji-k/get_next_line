@@ -17,9 +17,17 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# define BUFSIZE 5
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
+
 char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strtrim(char const *s1, char const *set);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_substr(char *s, int start, int len);
+int		ft_strlen(char *s);
+int		ft_strlcpy(char *dst, char *src, int dstsize);
+int		ft_strlcat(char *dst, char *src, int dstsize);
+char	*ft_strchr( char *str, int c);
+char	*ft_strdup( char *s1);
+
 #endif
