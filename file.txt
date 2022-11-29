@@ -1,4 +1,0 @@
-1(hello_how_are_U?)
-2(what_is_your_name??)
-3(my name is: NAJI)
-4(just a test tring to track leaks)

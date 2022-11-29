@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 5000
 # endif
 
 char	*get_next_line(int fd);
@@ -27,7 +27,8 @@ char	*ft_substr(char *s, int start, int len);
 int		ft_strlen(char *s);
 int		ft_strlcpy(char *dst, char *src, int dstsize);
 int		ft_strlcat(char *dst, char *src, int dstsize);
-char	*ft_strchr( char *str, int c);
-char	*ft_strdup( char *s1);
+char	*ft_strchr(char *str, int c);
+void	mini_cut(char *mini);
+char	*read_mini_buffer(int fd, char *mini_buffer, char *buffer);
 
 #endif
